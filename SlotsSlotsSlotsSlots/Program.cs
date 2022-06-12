@@ -35,6 +35,8 @@ namespace SlotsSlotsSlotsSlots
 
                     foreach (var armatureGetter in state.LoadOrder.PriorityOrder.WinningOverrides<IArmorAddonGetter>())
                     {
+                        if (settings.RecordsToYeet.Contains(armatureGetter) || (armatureGetter.EditorID is not null && settings.EditorIDsToYeet.Contains(armatureGetter.EditorID))) { continue; }
+
                         if (armatureGetter.BodyTemplate is not null && armatureGetter.BodyTemplate.FirstPersonFlags.HasFlag(rootSlot))
                         {
                             // add needed flags
