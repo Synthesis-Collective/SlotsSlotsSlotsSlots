@@ -35,7 +35,14 @@ namespace SlotsSlotsSlotsSlots
 
                     foreach (var armatureGetter in state.LoadOrder.PriorityOrder.WinningOverrides<IArmorAddonGetter>())
                     {
-                        if (settings.RecordsToYeet.Contains(armatureGetter) || (armatureGetter.EditorID is not null && settings.EditorIDsToYeet.Contains(armatureGetter.EditorID))) { continue; }
+                        if (settings.RecordsToYeet.Contains(armatureGetter) || 
+                            settings.ModKeysToYeet_Root.Contains(armatureGetter.FormKey.ModKey) ||
+                            (armatureGetter.EditorID is not null && 
+                                (settings.EditorIDsToYeet.Contains(armatureGetter.EditorID) || 
+                                    settings.EditorIDsToYeet_Substrings.Where(x => armatureGetter.EditorID.Contains(x)).Any()))) { continue; }
+
+                        var overrideMods = state.LinkCache.ResolveAllContexts<IArmorAddon, IArmorAddonGetter>(armatureGetter.FormKey).Where(x => !x.ModKey.Equals(armatureGetter.FormKey.ModKey)).Select(x => x.ModKey);
+                        if (overrideMods.Where(x => settings.ModKeysToYeet_Override.Contains(x)).Any()) { continue; }
 
                         if (armatureGetter.BodyTemplate is not null && armatureGetter.BodyTemplate.FirstPersonFlags.HasFlag(rootSlot))
                         {
