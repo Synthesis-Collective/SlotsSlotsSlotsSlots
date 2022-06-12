@@ -1,0 +1,8 @@
+{
+  "Nickname": "SlotsSlotsSlotsSlots",
+  "Visibility": "Visible",
+  "OneLineDescription": "Adds or removes armature slots based on other armature slots.",
+  "LongDescription": "Adds or removes armature slots based on other armature slots.",
+  "PreferredAutoVersioning": "Default",
+  "RequiredMods": []
+}
